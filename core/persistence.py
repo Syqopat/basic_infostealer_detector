@@ -36,7 +36,7 @@ def audit_persistence():
     $winlogon = Get-ItemProperty -Path "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon" -ErrorAction SilentlyContinue
     $shell = if ($winlogon) { $winlogon.Shell } else { "explorer.exe" }
     $userinit = if ($winlogon) { $winlogon.Userinit } else { "C:\\Windows\\system32\\userinit.exe," }
-    $winlogonSus = ($shell -ne "explorer.exe") -or ($userinit -notmatch "userinit\.exe")
+    $winlogonSus = ($shell -ne "explorer.exe") -or ($userinit -notmatch "userinit\\.exe")
     $res["Winlogon"] = [PSCustomObject]@{
         Shell = $shell
         Userinit = $userinit
@@ -51,7 +51,7 @@ def audit_persistence():
     foreach ($dir in $startupDirs) {
         if (Test-Path $dir) {
             Get-ChildItem -Path $dir -ErrorAction SilentlyContinue | ForEach-Object {
-                $isSus = ($_.Extension -match "\.(lnk|bat|vbs|ps1|exe|cmd|scr)$")
+                $isSus = ($_.Extension -match "\\.(lnk|bat|vbs|ps1|exe|cmd|scr)$")
                 $startupFiles += [PSCustomObject]@{
                     Directory = $dir
                     FileName = $_.Name

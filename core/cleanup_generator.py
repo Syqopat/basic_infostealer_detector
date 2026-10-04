@@ -16,12 +16,23 @@ def generate_cleanup_script(findings, output_path=None):
         "    exit /b",
         ")",
         "",
-        "title ADVANCED TROJAN & MALWARE CLEANUP SCRIPT",
+        "title BASIC INFO-STEALER DETECTOR - CLEANUP SCRIPT",
         "echo ========================================================",
-        "echo   TROJAN SENTINEL - AUTOMATED CLEANUP SCRIPT",
+        "echo   BASIC INFO-STEALER DETECTOR - AUTOMATED CLEANUP",
         "echo ========================================================",
         "echo."
     ]
+
+    for item in findings.get("yara_matches", []):
+        fpath = item.get("FilePath", "")
+        if " -> " in fpath:
+            fpath = fpath.split(" -> ")[-1].strip()
+        if fpath:
+            lines.append(f"echo [*] Quarantining YARA Stealer Match: {fpath}...")
+            lines.append(f'if exist "{fpath}" (')
+            lines.append(f'    attrib -h -s -r "{fpath}"')
+            lines.append(f'    ren "{fpath}" "*.quarantine" 2>nul')
+            lines.append(")")
 
     for item in findings.get("suspicious_processes", []):
         pid = item.get("Id") or item.get("PID")
@@ -53,16 +64,6 @@ def generate_cleanup_script(findings, output_path=None):
         if tname:
             lines.append(f"echo [*] Unregistering Suspicious Scheduled Task: {tname}...")
             lines.append(f'schtasks /delete /tn "{tname}" /f 2>nul')
-
-    for item in findings.get("suspicious_files", []):
-        fpath = item.get("FullPath", "")
-        if fpath:
-            lines.append(f"echo [*] Quarantining File: {fpath}...")
-            lines.append(f'if exist "{fpath}" (')
-            lines.append(f'    attrib -h -s -r "{fpath}"')
-            lines.append(f'    ren "{fpath}" "*.quarantine" 2>nul')
-            lines.append(f'    echo [+] Quarantined: {fpath}')
-            lines.append(")")
 
     lines.extend([
         "echo.",

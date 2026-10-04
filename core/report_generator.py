@@ -2,26 +2,37 @@ import json
 import datetime
 import os
 
-def export_json_report(audit_data, filepath="trojan_sentinel_report.json"):
+def export_json_report(audit_data, filepath="info_stealer_detector_report.json"):
     with open(filepath, "w", encoding="utf-8") as f:
         json.dump(audit_data, f, indent=4)
     return filepath
 
-def export_markdown_report(audit_data, filepath="trojan_sentinel_report.md"):
+def export_markdown_report(audit_data, filepath="info_stealer_detector_report.md"):
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     md = []
-    md.append("# TrojanSentinel - Advanced Forensic Audit Report")
+    md.append("# Basic Info-Stealer Detector - Forensic Audit Report")
     md.append(f"**Generated On:** {now}\n")
 
     md.append("## Executive Summary")
     threat_count = audit_data.get("summary", {}).get("total_threats", 0)
     if threat_count > 0:
-        md.append(f"> **WARNING:** Found {threat_count} high-priority security concerns or persistence mechanisms.")
+        md.append(f"> **WARNING:** Found {threat_count} high-priority security concerns or stealer indicators.")
     else:
         md.append("> **OK:** System passed primary threat verification controls.")
     md.append("\n---\n")
 
-    md.append("## 1. Discord & Discord Canary Injection Audit")
+    md.append("## 1. YARA Rule Signature Scan Matches")
+    yara_list = audit_data.get("yara_matches", [])
+    if yara_list:
+        md.append("| File / Process Path | Matched YARA Rules |")
+        md.append("| --- | --- |")
+        for y in yara_list:
+            md.append(f"| `{y.get('FilePath')}` | **{y.get('MatchedRules')}** |")
+    else:
+        md.append("No YARA rule pattern matches detected for known info-stealers.")
+    md.append("\n---\n")
+
+    md.append("## 2. Discord & Discord Canary Injection Audit")
     disc = audit_data.get("discord_injections", [])
     if disc:
         md.append("| Variant | File Path | Injected | Details |")
@@ -33,7 +44,7 @@ def export_markdown_report(audit_data, filepath="trojan_sentinel_report.md"):
         md.append("No installed Discord desktop clients found.")
     md.append("\n---\n")
 
-    md.append("## 2. UAC Bypass Hijack Audit")
+    md.append("## 3. UAC Bypass Hijack Audit")
     uac = audit_data.get("uac_bypasses", [])
     if uac:
         md.append("| Technique | Registry Path | Hijack Value | Bypassed |")
@@ -45,7 +56,7 @@ def export_markdown_report(audit_data, filepath="trojan_sentinel_report.md"):
         md.append("No active UAC bypass registry hijacks detected.")
     md.append("\n---\n")
 
-    md.append("## 3. Backdoor & RAT Connection Audit")
+    md.append("## 4. Backdoor & RAT Connection Audit")
     back = audit_data.get("backdoors", [])
     if back:
         md.append("| Type | PID | Process Name | Path | Endpoints | State |")
@@ -56,25 +67,6 @@ def export_markdown_report(audit_data, filepath="trojan_sentinel_report.md"):
         md.append("No active backdoor ports or RAT signature processes detected.")
     md.append("\n---\n")
 
-    md.append("## 4. Task Scheduler Audit")
-    tasks = audit_data.get("tasks", [])
-    if tasks:
-        md.append("| Task Name | Path | State | Actions | Suspicious |")
-        md.append("| --- | --- | --- | --- | --- |")
-        for t in tasks:
-            is_sus = "YES" if t.get("IsSuspicious") else "NO"
-            md.append(f"| {t.get('TaskName')} | {t.get('TaskPath')} | {t.get('State')} | {t.get('Actions')} | {is_sus} |")
-    md.append("\n---\n")
-
-    md.append("## 5. Startup & Registry Persistence")
-    reg = audit_data.get("persistence", {}).get("RegistryStartup", [])
-    if reg:
-        md.append("| Registry Path | Value Name | Value Data | Suspicious |")
-        md.append("| --- | --- | --- | --- |")
-        for r in reg:
-            is_sus = "YES" if r.get("IsSuspicious") else "NO"
-            md.append(f"| {r.get('RegistryPath')} | {r.get('ValueName')} | `{r.get('ValueData')}` | **{is_sus}** |")
-    
     content = "\n".join(md)
     with open(filepath, "w", encoding="utf-8") as f:
         f.write(content)

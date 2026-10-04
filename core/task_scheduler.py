@@ -7,7 +7,7 @@ def audit_task_scheduler():
     foreach ($t in $tasks) {
         $execs = ($t.Actions | ForEach-Object { "$($_.Execute) $($_.Arguments)" }) -join " ; "
         $trigs = ($t.Triggers | ForEach-Object { $_.ToString() }) -join " ; "
-        $isSuspicious = ($execs -match "powershell|-enc|cmd\.exe|cscript|wscript|temp|appdata|AppData|vbs|bat|scr")
+        $isSuspicious = ($execs -match "powershell|-enc|cmd\\.exe|cscript|wscript|temp|appdata|AppData|vbs|bat|scr")
         $result += [PSCustomObject]@{
             TaskName = $t.TaskName
             TaskPath = $t.TaskPath

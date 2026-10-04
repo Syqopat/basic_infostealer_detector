@@ -12,49 +12,50 @@ console = Console()
 
 BANNER = """
  [bold cyan]
-  ████████╗██████╗  ██████╗  ██████╗  █████╗ ███╗   ██╗███████╗███████╗███╗   ██╗████████╗██╗███╗   ██╗███████╗██╗     
-  ╚══██╔══╝██╔══██╗██╔═══██╗██╔════╝ ██╔══██╗████╗  ██║██╔════╝██╔════╝████╗  ██║╚══██╔══╝██║████╗  ██║██╔════╝██║     
-     ██║   ██████╔╝██║   ██║██║  ███╗███████║██╔██╗ ██║███████╗█████╗  ██╔██╗ ██║   ██║   ██║██╔██╗ ██║█████╗  ██║     
-     ██║   ██╔══██╗██║   ██║██║   ██║██╔══██║██║╚██╗██║╚════██║██╔══╝  ██║╚██╗██║   ██║   ██║██║╚██╗██║██╔══╝  ██║     
-     ██║   ██║  ██║╚██████╔╝╚██████╔╝██║  ██║██║ ╚████║███████║███████╗██║ ╚████║   ██║   ██║██║ ╚████║███████╗███████╗
-     ╚═╝   ╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚═╝╚═╝  ╚═══╝╚══════╝╚══════╝
+  ██████╗  █████╗ ███████╗██╗ ██████╗    ███████╗████████╗███████╗██╗██╗     ███████╗██████╗ 
+  ██╔══██╗██╔══██╗██╔════╝██║██╔════╝    ██╔════╝╚══██╔══╝██╔════╝██║██║     ██╔════╝██╔══██╗
+  ██████╔╝███████║███████╗██║██║         ███████╗   ██║   █████╗  ██║██║     █████╗  ██████╔╝
+  ██╔══██╗██╔══██║╚════██║██║██║         ╚════██║   ██║   ██╔══╝  ██║██║     ██╔══╝  ██╔══██╗
+  ██████╔╝██║  ██║███████║██║╚██████╗    ███████║   ██║   ███████╗██║███████╗███████╗██║  ██║
+  ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝ ╚═════╝    ╚══════╝   ╚═╝   ╚══════╝╚═╝╚══════╝╚══════╝╚═╝  ╚═╝
  [/bold cyan]
- [bold yellow]         >>> ADVANCED TROJAN & PERSISTENCE FORENSIC SYSTEM v1.0.0 <<<[/bold yellow]
- [bold magenta]                 [ Cyber Threat Intelligence & Deep Malware Auditor ] [/bold magenta]
+ [bold yellow]       >>> BASIC INFO-STEALER DETECTOR & YARA SCANNER v1.0.0 <<<[/bold yellow]
+ [bold magenta]             [ Cyber Threat Intelligence & Memory/YARA Auditor ] [/bold magenta]
 """
 
 def show_banner():
     console.clear()
     console.print(Align.center(Text.from_markup(BANNER)))
-    console.print(Align.center("[bold white on blue] DISCORD INJECTION | UAC BYPASS | CLIPPER | WALLET & BROWSER SECURITY [/bold white on blue]\n"))
+    console.print(Align.center("[bold white on blue] INFO-STEALER DETECTOR | YARA RULES | DISCORD | UAC | BACKDOOR ENGINE [/bold white on blue]\n"))
 
 def show_menu():
-    table = Table(title="[bold cyan]SYSTEM AUDIT & ADVANCED THREAT CONTROLS[/bold cyan]", show_header=True, header_style="bold underline magenta", expand=True)
+    table = Table(title="[bold cyan]BASIC INFO-STEALER DETECTOR CONTROLS[/bold cyan]", show_header=True, header_style="bold underline magenta", expand=True)
     table.add_column("Option", style="bold yellow", justify="center", width=8)
     table.add_column("Audit Module Description", style="bold white")
     table.add_column("Scope / Target", style="cyan")
 
-    table.add_row("1", "Full Deep Security Scan (All 12 Modules)", "Complete System & Stealer Audit")
-    table.add_row("2", "Discord & Canary JS Injection Audit", "Inspect desktop_core index.js")
-    table.add_row("3", "UAC Bypass Hijack Audit", "ms-settings, mscfile, UserInit")
-    table.add_row("4", "Crypto Clipper & Address Swap Scan", "Clipboard Hooks & Processes")
-    table.add_row("5", "Browser Extensions & WebRequest Audit", "Chrome, Edge, Brave, Opera")
-    table.add_row("6", "Crypto Wallet Integrity Audit", "Exodus, Atomic, MetaMask, Phantom")
-    table.add_row("7", "Backdoor & Reverse Shell Scan", "Listening Ports, RAT Signatures")
-    table.add_row("8", "Task Scheduler Persistence Audit", "Get-ScheduledTask / Triggers")
-    table.add_row("9", "Startup & Registry Keys Audit", "Run, RunOnce, Winlogon, WMI")
-    table.add_row("10", "Active Processes & Code Signatures", "Authenticode, AppData / Temp")
-    table.add_row("11", "Critical Directories & Temp Scan", "ProgramData / Temp Executables")
-    table.add_row("12", "Network Ports & Proxy Hijack Scan", "TCP Connections, Hosts, Proxy")
-    table.add_row("13", "Defender Threat Log & QuickScan", "Get-MpThreatDetection / Scan")
-    table.add_row("14", "Generate Desktop One-Click Cleanup Script", "Build Administrative .bat")
-    table.add_row("15", "Export Audit Report (JSON & Markdown)", "Save Local Artifacts")
-    table.add_row("0", "Exit System", "Terminate TrojanSentinel")
+    table.add_row("1", "Full Security Scan (All 13 Forensic Modules)", "Complete System & YARA Audit")
+    table.add_row("2", "YARA Rule Signature Scan (Stealers & RATs)", "info_stealers.yar Pattern Scan")
+    table.add_row("3", "Discord & Canary JS Injection Audit", "Inspect desktop_core index.js")
+    table.add_row("4", "UAC Bypass Hijack Audit", "ms-settings, mscfile, UserInit")
+    table.add_row("5", "Crypto Clipper & Address Swap Scan", "Clipboard Hooks & Processes")
+    table.add_row("6", "Browser Extensions & WebRequest Audit", "Chrome, Edge, Brave, Opera")
+    table.add_row("7", "Crypto Wallet Integrity Audit", "Exodus, Atomic, MetaMask, Phantom")
+    table.add_row("8", "Backdoor & Reverse Shell Scan", "Listening Ports, RAT Signatures")
+    table.add_row("9", "Task Scheduler Persistence Audit", "Get-ScheduledTask / Triggers")
+    table.add_row("10", "Startup & Registry Keys Audit", "Run, RunOnce, Winlogon, WMI")
+    table.add_row("11", "Active Processes & Code Signatures", "Authenticode, AppData / Temp")
+    table.add_row("12", "Critical Directories & Temp Scan", "ProgramData / Temp Executables")
+    table.add_row("13", "Network Ports & Proxy Hijack Scan", "TCP Connections, Hosts, Proxy")
+    table.add_row("14", "Defender Threat Log & QuickScan", "Get-MpThreatDetection / Scan")
+    table.add_row("15", "Generate Desktop One-Click Cleanup Script", "Build Administrative .bat")
+    table.add_row("16", "Export Audit Report (JSON & Markdown)", "Save Local Artifacts")
+    table.add_row("0", "Exit System", "Terminate Application")
 
     console.print(table)
     console.print()
 
-def simulate_progress(task_name: str, duration: float = 0.6):
+def simulate_progress(task_name: str, duration: float = 0.5):
     with Progress(
         SpinnerColumn("dots", style="bold cyan"),
         TextColumn("[bold green]{task.description}"),
