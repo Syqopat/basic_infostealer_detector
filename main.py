@@ -36,57 +36,57 @@ class InfoStealerDetectorApp:
 
     def run_full_scan(self):
         show_banner()
-        console.print("[bold cyan][*] INITIATING BASIC INFO-STEALER DETECTOR FORENSIC SCAN...[/bold cyan]\n")
+        console.print("[bold cyan][*] INITIATING ENDPOINT SECURITY AUDIT...[/bold cyan]\n")
         
-        simulate_progress("1/13 Running YARA Stealer Signature Scan (info_stealers.yar)...", 0.6)
+        simulate_progress("1/13 Running YARA Stealer Signature Scan (info_stealers.yar)...", 0.4)
         yara_matches = audit_yara_rules()
         self.audit_data["yara_matches"] = yara_matches
 
-        simulate_progress("2/13 Auditing Discord JS Client Injections...", 0.5)
+        simulate_progress("2/13 Auditing Discord JS Client Injections...", 0.4)
         disc = audit_discord_injections()
         self.audit_data["discord_injections"] = disc
 
-        simulate_progress("3/13 Auditing UAC Bypass Registry Hijacks...", 0.5)
+        simulate_progress("3/13 Auditing UAC Bypass Registry Hijacks...", 0.4)
         uac = audit_uac_bypasses()
         self.audit_data["uac_bypasses"] = uac
 
-        simulate_progress("4/13 Scanning Crypto Clipper Address Swappers...", 0.5)
+        simulate_progress("4/13 Scanning Crypto Clipper Address Swappers...", 0.4)
         clip = audit_clipper_mechanisms()
         self.audit_data["clippers"] = clip
 
-        simulate_progress("5/13 Auditing Browser Extensions & WebRequest APIs...", 0.5)
+        simulate_progress("5/13 Auditing Browser Extensions & WebRequest APIs...", 0.4)
         browsers = audit_browser_security()
         self.audit_data["browser_extensions"] = browsers
 
-        simulate_progress("6/13 Auditing Crypto Wallet Integrity...", 0.5)
+        simulate_progress("6/13 Auditing Crypto Wallet Integrity...", 0.4)
         wallets = audit_crypto_wallets()
         self.audit_data["wallets"] = wallets
 
-        simulate_progress("7/13 Scanning Backdoors & C2 Listening Ports...", 0.5)
+        simulate_progress("7/13 Scanning Backdoors & C2 Listening Ports...", 0.4)
         back = audit_backdoors()
         self.audit_data["backdoors"] = back
 
-        simulate_progress("8/13 Auditing Task Scheduler Tasks...", 0.5)
+        simulate_progress("8/13 Auditing Task Scheduler Tasks...", 0.4)
         tasks = audit_task_scheduler()
         self.audit_data["tasks"] = tasks
 
-        simulate_progress("9/13 Auditing Registry & Startup Persistence...", 0.5)
+        simulate_progress("9/13 Auditing Registry & Startup Persistence...", 0.4)
         persistence = audit_persistence()
         self.audit_data["persistence"] = persistence
 
-        simulate_progress("10/13 Analyzing Active Processes & Code Signatures...", 0.6)
+        simulate_progress("10/13 Analyzing Active Processes & Code Signatures...", 0.5)
         processes = audit_processes()
         self.audit_data["processes"] = processes
 
-        simulate_progress("11/13 Inspecting ProgramData & Temp Directories...", 0.5)
+        simulate_progress("11/13 Inspecting ProgramData & Temp Directories...", 0.4)
         directories = audit_directories()
         self.audit_data["directories"] = directories
 
-        simulate_progress("12/13 Checking Network Connections & Proxy Hijacks...", 0.5)
+        simulate_progress("12/13 Checking Network Connections & Proxy Hijacks...", 0.4)
         network = audit_network()
         self.audit_data["network"] = network
 
-        simulate_progress("13/13 Retrieving Windows Defender Threat Log...", 0.5)
+        simulate_progress("13/13 Retrieving Windows Defender Threat Log...", 0.4)
         defender = audit_defender()
         self.audit_data["defender"] = defender
 
@@ -94,7 +94,7 @@ class InfoStealerDetectorApp:
 
     def display_summary(self):
         console.print("\n[bold green]========================================================[/bold green]")
-        console.print("[bold green]       BASIC INFO-STEALER DETECTOR - AUDIT SUMMARY       [/bold green]")
+        console.print("[bold green]       BASIC INFOSTEALER DETECTOR - AUDIT SUMMARY       [/bold green]")
         console.print("[bold green]========================================================[/bold green]\n")
 
         yara_matches = self.audit_data.get("yara_matches", [])
