@@ -9,15 +9,19 @@ KNOWN_LEGIT_PROCESSES = {
     "brave.exe", "opera.exe", "vivaldi.exe", "antigravity.exe", "antigravity ide.exe", "python.exe",
     "code.exe", "git.exe", "bash.exe", "rtkauduserveice64.exe", "lghub_system_tray.exe",
     "claude.exe", "curseforge.exe", "curse.agent.host.exe", "language_server.exe",
-    "opencode-cli.exe", "zcode.exe", "node.exe", "electron.exe"
+    "opencode-cli.exe", "zcode.exe", "node.exe", "electron.exe", "onedrive.exe", "explorer.exe",
+    "chxsmartscreen.exe", "lockapp.exe", "crossdeviceresume.exe", "defendersessionhelper.exe",
+    "powertoys.exe", "powertoys.alwaysontop.exe", "microsoft.cmdpal.ext.powertoys.exe",
+    "basic_infostealer_detector.exe", "update.exe", "skype.exe", "teams.exe", "slack.exe",
+    "dropbox.exe", "ctfmon.exe", "taskhostw.exe", "searchhost.exe", "startmenuexperiencehost.exe",
+    "runtimebroker.exe", "shellexperiencehost.exe"
 }
 
 KNOWN_LEGIT_PATHS = [
     r"c:\program files",
     r"c:\program files (x86)",
-    r"c:\windows\system32",
-    r"c:\windows\syswow64",
-    r"c:\windows\winsxs"
+    r"c:\windows",
+    r"c:\programdata\microsoft"
 ]
 
 def is_whitelisted_process(p_name: str, p_path: str) -> bool:
@@ -36,7 +40,7 @@ def is_whitelisted_process(p_name: str, p_path: str) -> bool:
         for legit_dir in KNOWN_LEGIT_PATHS:
             if path_lower.startswith(legit_dir):
                 return True
-        if "appdata\\local\\programs" in path_lower or "appdata\\local\\discord" in path_lower or "appdata\\local\\roblox" in path_lower or "appdata\\local\\openclaw" in path_lower:
+        if "appdata\\local\\programs" in path_lower or "appdata\\local\\discord" in path_lower or "appdata\\local\\roblox" in path_lower or "appdata\\local\\microsoft" in path_lower or "appdata\\local\\powertoys" in path_lower:
             return True
 
     return False

@@ -160,9 +160,11 @@ class InfoStealerDetectorApp:
         sus_reg = []
         reg_items = self.audit_data.get("persistence", {}).get("RegistryStartup", [])
         for r in reg_items:
-            val_data = str(r.get("ValueData", ""))
-            if "AppData" in val_data or "Temp" in val_data or r.get("IsSuspicious"):
-                sus_reg.append(r)
+            if r.get("IsSuspicious"):
+                val_data = str(r.get("ValueData", "")).lower()
+                val_name = str(r.get("ValueName", "")).lower()
+                if not any(clean in val_name or clean in val_data for clean in ["onedrive", "discord", "roblox", "spotify", "steam", "powertoys"]):
+                    sus_reg.append(r)
 
         if sus_reg:
             console.print("\n[bold red][!] HIGH PRIORITY THREAT IN REGISTRY RUN KEYS![/bold red]")
@@ -283,8 +285,11 @@ class InfoStealerDetectorApp:
             sus_reg = []
             reg_items = self.audit_data.get("persistence", {}).get("RegistryStartup", [])
             for r in reg_items:
-                if "AppData" in str(r.get("ValueData", "")) or r.get("IsSuspicious"):
-                    sus_reg.append(r)
+                if r.get("IsSuspicious"):
+                    val_data = str(r.get("ValueData", "")).lower()
+                    val_name = str(r.get("ValueName", "")).lower()
+                    if not any(clean in val_name or clean in val_data for clean in ["onedrive", "discord", "roblox", "spotify", "steam", "powertoys"]):
+                        sus_reg.append(r)
             
             script_path = generate_cleanup_script({
                 "yara_matches": self.audit_data.get("yara_matches", []),

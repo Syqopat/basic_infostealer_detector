@@ -5,7 +5,7 @@ def audit_processes():
     script = """
     $procs = Get-Process -ErrorAction SilentlyContinue | Where-Object { $_.Path } | ForEach-Object {
         $p = $_
-        $isSystemPath = ($p.Path -match "^C:\\\\Windows\\\\System32" -or $p.Path -match "^C:\\\\Windows\\\\SysWOW64")
+        $isSystemPath = ($p.Path -match "^C:\\\\Windows" -or $p.Path -match "^C:\\\\Program Files")
         $statusStr = "Valid (System)"
         $signerStr = "Microsoft Windows"
         if (-not $isSystemPath) {
@@ -13,7 +13,7 @@ def audit_processes():
             if ($sig -and $sig.Status) { $statusStr = $sig.Status.ToString() } else { $statusStr = "Unknown" }
             if ($sig -and $sig.SignerCertificate) { $signerStr = $sig.SignerCertificate.Subject } else { $signerStr = "Unsigned" }
         }
-        $isSusPath = ($p.Path -match "AppData|Temp|ProgramData")
+        $isSusPath = ($p.Path -match "Temp\\\\.*\\.exe")
         $isUnsigned = ($statusStr -ne "Valid" -and $statusStr -ne "Valid (System)")
         $isSus = $isSusPath -or ($isUnsigned -and -not $isSystemPath)
         

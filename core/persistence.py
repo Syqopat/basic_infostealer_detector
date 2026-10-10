@@ -19,7 +19,7 @@ def audit_persistence():
             if ($props) {
                 foreach ($prop in $props.PSObject.Properties) {
                     if ($prop.Name -notmatch "^PS|^Class") {
-                        $isSus = ($prop.Value -match "temp|appdata|AppData|powershell|-enc|cscript|wscript|vbs|bat|scr")
+                        $isSus = ($prop.Value -match "powershell|-enc|cscript|wscript|vbs|bat|scr|mshta|rundll32") -or ($prop.Value -match "Temp\\\\.*\\.exe")
                         $startupReg += [PSCustomObject]@{
                             RegistryPath = $p
                             ValueName = $prop.Name
